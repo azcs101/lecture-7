@@ -5,12 +5,9 @@ public:
 	const char *name;
 
 	Entity(const char *name_) : name(name_) {}
-	void describe();
-};
 
-void Entity::describe() {
-	std::cout << "Entity: " << name << "\n";
-}
+	virtual void describe() = 0;
+};
 
 class Person : public Entity {
 public:
@@ -57,16 +54,18 @@ void Vehicle::describe() {
 	std::cout << " - Horse Power: " << hp << "km\n";
 }
 
-
 int main() {
 
-	Vehicle *e1 = new Vehicle("BMW M3", 2019, 450);
-	Animal *e2 = new Animal("Kiwi", false);
-	Person *e3 = new Person("John Doe", 182);
+	Entity *entities[] = {
+		new Vehicle("BMW M3", 2019, 450),
+		new Animal("Kiwi", false),
+		new Person("John Doe", 182)
+	};
 
-	e1->describe();
-	e2->describe();
-	e3->describe();
+	for (int i = 0; i < 3; ++i) {
+		entities[i]->describe();
+	}
+
 
 	return 0;
 }

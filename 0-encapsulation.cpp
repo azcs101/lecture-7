@@ -1,9 +1,10 @@
 #include <iostream>
 
 class Entity {
-public:
+protected:
 	const char *name;
 
+public:
 	Entity(const char *name_) : name(name_) {}
 	virtual void describe() = 0;
 };
@@ -41,14 +42,16 @@ void Animal::describe() {
 }
 
 class Vehicle : public Entity {
-public:
+private:
 	const char *model;
 	int year;
 	int hp;
 
+public:
 	Vehicle(const char *name_, int year_, int hp_) : Entity(name_), year(year_), hp(hp_) {}
 
 	void describe();
+	void setYear(int year);
 };
 
 void Vehicle::describe() {
@@ -57,8 +60,19 @@ void Vehicle::describe() {
 	std::cout << " - Horse Power: " << hp << "km\n";
 }
 
+void Vehicle::setYear(int year_) {
+	if (year_ < 2000) {
+		std::cout << "What are you doing?\n";
+	} else {
+		year = year_;
+	}
+}
+
 
 int main() {
+
+	Vehicle *v = new Vehicle("Audi", 2018, 350);
+	v->describe();
 
 	Entity *entities[] = {
 		new Vehicle("BMW M3", 2019, 450),
@@ -66,9 +80,9 @@ int main() {
 		new Person("John Doe", 182)
 	};
 
-	for (int i = 0; i < 3; ++i) {
-		entities[i]->describe();
-	}
+	// for (int i = 0; i < 3; ++i) {
+	// 	entities[i]->describe();
+	// }
 
 	return 0;
 }
